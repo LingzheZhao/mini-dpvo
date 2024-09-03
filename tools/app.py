@@ -122,7 +122,7 @@ def run_dpvo(
                     slam.points_
                 )
                 colors: UInt8[torch.Tensor, "buffer_size num_patches 3"] = slam.colors_
-                path_list = log_trajectory(
+                path_list, _, _ = log_trajectory(
                     parent_log_path,
                     poses,
                     points,

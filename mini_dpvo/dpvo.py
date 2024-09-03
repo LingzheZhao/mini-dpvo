@@ -153,12 +153,13 @@ class DPVO:
             self.traj[current_t] = self.poses_[i]
 
         poses = [self.get_pose(t) for t in range(self.counter)]
-        poses = lietorch.stack(poses, dim=0)
-        poses = poses.inv().data.cpu().numpy()
-        tstamps = np.array(self.tlist, dtype=np.float64)
+        w2c = lietorch.stack(poses, dim=0)
+        c2w = w2c.inv().data
+        w2c = w2c.data
+        tstamps = torch.tensor(self.tlist, dtype=torch.float64)
         print("Done!")
 
-        return poses, tstamps
+        return c2w, w2c, tstamps
 
     def corr(self, coords, indicies=None):
         """local correlation volume"""
